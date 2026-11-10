@@ -35,19 +35,19 @@ public class OscilloscopeHudRenderer implements HudElement {
     }
 
     private void drawPanel(GuiGraphicsExtractor graphics, int x, int y, int width, int height) {
-        graphics.fill(x, y, width, height, 0xFF080808);
+        graphics.fill(x, y, x + width, y + height, 0xFF080808);
 
         // Main Area
-        graphics.fill(x + 1, y + 1, width - 1, height - 1, 0xFF141414);
+        graphics.fill(x + 1, y + 1,  x + width - 1, y + height - 1, 0xFF141414);
 
-        drawGraph(graphics, x + 2, y + 2, width - 2, height - 2);
+        drawGraph(graphics, x + 2, y + 2, x + width - 2, y + height - 2);
     }
 
     private void drawGraph(GuiGraphicsExtractor graphics, int x, int y, int width, int height) {
         int maxLevel = 15;
         Font font = Minecraft.getInstance().font;
 
-        int stepsPerLevel = height / maxLevel;
+        int stepsPerLevel = height / maxLevel - 1;
         for (int i = 0; i <= maxLevel; i++) {
             // Check if step can be divided by 3, so 15, 12, 9, 6, 3 or 0
             if (i % 3 == 0) {
@@ -55,11 +55,16 @@ public class OscilloscopeHudRenderer implements HudElement {
                 if (i >= 10)
                     paddingValue = 0;
 
-                graphics.text(font, String.valueOf(i), x + 2 + paddingValue, y + (stepsPerLevel - 1) * (15 - i) + 4, 0xFFFFFFFF);
+                graphics.text(font, String.valueOf(i), x + 2 + paddingValue, y + stepsPerLevel * (15 - i) + 7, 0xFFFFFFFF);
             }
         }
 
         // Seperator
         graphics.verticalLine(x + 17, y - 2, y + height - 5, 0xFF454545);
+
+        for (int row = 0; row < 6; row++)
+        {
+            graphics.horizontalLine(x + 22, x + width - 14, y + stepsPerLevel * row * 3 + 10, 0xFF454545);
+        }
     }
 }

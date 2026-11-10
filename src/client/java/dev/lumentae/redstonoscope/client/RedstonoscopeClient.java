@@ -16,6 +16,7 @@ import java.time.chrono.MinguoChronology;
 
 public class RedstonoscopeClient implements ClientModInitializer {
     public static BlockPos ProbingPos = new BlockPos(Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE);
+    public static int TimeShown = 10 * 20; // 200 ticks = 10s
 
     @Override
     public void onInitializeClient() {
