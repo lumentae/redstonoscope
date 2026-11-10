@@ -18,7 +18,7 @@ public class OscilloscopeHudRenderer implements HudElement {
         float scale = 3f / guiScale;
 
         // Take up 1/3 of the screen width and height
-        int sizeX = Math.round(graphics.guiWidth() / (4f * scale));
+        int sizeX = Math.round(graphics.guiWidth() / (4f * scale) * 1.075f);
         int sizeY = Math.round(graphics.guiHeight() / (4f * scale));
 
         // Put it to the top left corner of the screen
@@ -71,14 +71,13 @@ public class OscilloscopeHudRenderer implements HudElement {
             graphics.horizontalLine(graphStart, graphEnd, (int) (y + stepsPerLevel * row * 3 + 10), 0xFF454545);
         }
 
-        float horizontalSteps = (float) (graphEnd - graphStart) / RedstonoscopeClient.TimeShown;
         int[] samples = Constants.COLLECTOR.getLastSamples();
         for (int datapoint = 0; datapoint < RedstonoscopeClient.TimeShown - 1; datapoint++) {
             int sample0 = samples[RedstonoscopeClient.TimeShown - 1 - datapoint];
             int sample1 = samples[RedstonoscopeClient.TimeShown - 2 - datapoint];
 
-            int x0 = graphStart + Math.round(datapoint * horizontalSteps);
-            int x1 = graphStart + Math.round((datapoint + 1) * horizontalSteps);
+            int x0 = graphStart + datapoint;
+            int x1 = graphStart + datapoint + 1;
 
             int y0 = y + 10 + Math.round((maxLevel - sample0) * stepsPerLevel);
             int y1 = y + 10 + Math.round((maxLevel - sample1) * stepsPerLevel);
