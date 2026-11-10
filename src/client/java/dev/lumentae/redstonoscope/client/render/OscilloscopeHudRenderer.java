@@ -21,17 +21,13 @@ public class OscilloscopeHudRenderer implements HudElement {
         int sizeX = Math.round(graphics.guiWidth() / (4f * scale) * 1.075f);
         int sizeY = Math.round(graphics.guiHeight() / (4f * scale));
 
-        // Put it to the top left corner of the screen
-        int posX = sizeX / 25;
-        int posY = sizeY / 25;
-
         var pose = graphics.pose();
         pose.pushMatrix();
 
         pose.translate(8 * scale, 8 * scale);
         pose.scale(scale, scale);
 
-        drawPanel(graphics, posX, posY, sizeX, sizeY);
+        drawPanel(graphics, 0, 0, sizeX, sizeY);
 
         pose.popMatrix();
     }
