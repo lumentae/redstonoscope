@@ -36,7 +36,7 @@ public class RedstonoscopeClient implements ClientModInitializer {
             int power = blockState.getValue(RedstoneWireBlock.POWER);
 
             Constants.COLLECTOR.addSample(power);
-            System.out.println("output: " + power);
+            //System.out.println("output: " + power);
         });
     }
 }

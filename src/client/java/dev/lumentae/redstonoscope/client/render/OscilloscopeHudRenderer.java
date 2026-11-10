@@ -1,5 +1,8 @@
 package dev.lumentae.redstonoscope.client.render;
 
+import dev.lumentae.redstonoscope.Constants;
+import dev.lumentae.redstonoscope.Redstonoscope;
+import dev.lumentae.redstonoscope.client.RedstonoscopeClient;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElement;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
@@ -47,7 +50,7 @@ public class OscilloscopeHudRenderer implements HudElement {
         int maxLevel = 15;
         Font font = Minecraft.getInstance().font;
 
-        int stepsPerLevel = height / maxLevel - 1;
+        float stepsPerLevel = (float) height / maxLevel - 1;
         for (int i = 0; i <= maxLevel; i++) {
             // Check if step can be divided by 3, so 15, 12, 9, 6, 3 or 0
             if (i % 3 == 0) {
@@ -55,16 +58,59 @@ public class OscilloscopeHudRenderer implements HudElement {
                 if (i >= 10)
                     paddingValue = 0;
 
-                graphics.text(font, String.valueOf(i), x + 2 + paddingValue, y + stepsPerLevel * (15 - i) + 7, 0xFFFFFFFF);
+                graphics.text(font, String.valueOf(i), x + 2 + paddingValue, (int) (y + stepsPerLevel * (15 - i) + 7), 0xFFFFFFFF);
             }
         }
 
         // Seperator
         graphics.verticalLine(x + 17, y - 2, y + height - 5, 0xFF454545);
 
+        int graphStart = x + 22;
+        int graphEnd = x + width - 14;
         for (int row = 0; row < 6; row++)
         {
-            graphics.horizontalLine(x + 22, x + width - 14, y + stepsPerLevel * row * 3 + 10, 0xFF454545);
+            graphics.horizontalLine(graphStart, graphEnd, (int) (y + stepsPerLevel * row * 3 + 10), 0xFF454545);
+        }
+
+        float horizontalSteps = (float) (graphEnd - graphStart) / RedstonoscopeClient.TimeShown;
+        int[] samples = Constants.COLLECTOR.getLastSamples();
+        for (int datapoint = RedstonoscopeClient.TimeShown - 1; datapoint > 0; datapoint--) {
+            int x0 = (int) (datapoint * horizontalSteps);
+            int x1 = (int) ((datapoint + 1) * horizontalSteps);
+            int y0 = (int) (samples[datapoint] * stepsPerLevel);
+            int y1 = (int) (samples[datapoint] * stepsPerLevel);
+
+            drawLine(graphics, graphStart + x0, y + y0 + 10, graphStart + x1, y + y1 + 10, 0xFFFF0000);
+        }
+    }
+
+    private void drawLine(GuiGraphicsExtractor graphics, int x0, int y0, int x1, int y1, int color) {
+        // Bresenham's line algorithm
+        int dx = Math.abs(x1 - x0);
+        int dy = Math.abs(y1 - y0);
+
+        int sx = x0 < x1 ? 1 : -1;
+        int sy = y0 < y1 ? 1 : -1;
+
+        int error = dx - dy;
+
+        while (true) {
+            graphics.fill(x0, y0, x0 + 1, y0 + 1, color);
+
+            if (x0 == x1 && y0 == y1)
+                break;
+
+            int e2 = 2 * error;
+
+            if (e2 > -dy) {
+                error -= dy;
+                x0 += sx;
+            }
+
+            if (e2 < dx)  {
+                error += dx;
+                y0 += sy;
+            }
         }
     }
 }

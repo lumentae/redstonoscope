@@ -14,6 +14,10 @@ public class SampleCollector {
         return samples;
     }
 
+    public int[] getLastSamples() {
+        return getLastNSamples(sampleSize);
+    }
+
     public int[] getLastNSamples(int n) {
         int[] result = new int[n];
         for (int i = 0; i < n; i++) {
