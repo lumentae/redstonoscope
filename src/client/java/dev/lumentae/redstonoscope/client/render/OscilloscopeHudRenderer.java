@@ -1,7 +1,6 @@
 package dev.lumentae.redstonoscope.client.render;
 
 import dev.lumentae.redstonoscope.Constants;
-import dev.lumentae.redstonoscope.Redstonoscope;
 import dev.lumentae.redstonoscope.client.RedstonoscopeClient;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElement;
 import net.minecraft.client.DeltaTracker;
@@ -43,7 +42,7 @@ public class OscilloscopeHudRenderer implements HudElement {
         // Main Area
         graphics.fill(x + 1, y + 1,  x + width - 1, y + height - 1, 0xFF141414);
 
-        drawGraph(graphics, x + 2, y + 2, x + width - 2, y + height - 2);
+        drawGraph(graphics, x + 2, y + 2, width, height - 8);
     }
 
     private void drawGraph(GuiGraphicsExtractor graphics, int x, int y, int width, int height) {
@@ -58,15 +57,15 @@ public class OscilloscopeHudRenderer implements HudElement {
                 if (i >= 10)
                     paddingValue = 0;
 
-                graphics.text(font, String.valueOf(i), x + 2 + paddingValue, (int) (y + stepsPerLevel * (15 - i) + 7), 0xFFFFFFFF);
+                graphics.text(font, String.valueOf(i), x + 2 + paddingValue, (int) (y + stepsPerLevel * (maxLevel - i) + 7), 0xFFFFFFFF);
             }
         }
 
         // Seperator
-        graphics.verticalLine(x + 17, y - 2, y + height - 5, 0xFF454545);
+        graphics.verticalLine(x + 17, y - 2, y + height + 5, 0xFF454545);
 
         int graphStart = x + 22;
-        int graphEnd = x + width - 14;
+        int graphEnd = x + width - 8;
         for (int row = 0; row < 6; row++)
         {
             graphics.horizontalLine(graphStart, graphEnd, (int) (y + stepsPerLevel * row * 3 + 10), 0xFF454545);
@@ -74,13 +73,18 @@ public class OscilloscopeHudRenderer implements HudElement {
 
         float horizontalSteps = (float) (graphEnd - graphStart) / RedstonoscopeClient.TimeShown;
         int[] samples = Constants.COLLECTOR.getLastSamples();
-        for (int datapoint = RedstonoscopeClient.TimeShown - 1; datapoint > 0; datapoint--) {
-            int x0 = (int) (datapoint * horizontalSteps);
-            int x1 = (int) ((datapoint + 1) * horizontalSteps);
-            int y0 = (int) (samples[datapoint] * stepsPerLevel);
-            int y1 = (int) (samples[datapoint] * stepsPerLevel);
+        for (int datapoint = 0; datapoint < RedstonoscopeClient.TimeShown - 1; datapoint++) {
+            int sample0 = samples[RedstonoscopeClient.TimeShown - 1 - datapoint];
+            int sample1 = samples[RedstonoscopeClient.TimeShown - 2 - datapoint];
 
-            drawLine(graphics, graphStart + x0, y + y0 + 10, graphStart + x1, y + y1 + 10, 0xFFFF0000);
+            int x0 = graphStart + Math.round(datapoint * horizontalSteps);
+            int x1 = graphStart + Math.round((datapoint + 1) * horizontalSteps);
+
+            int y0 = y + 10 + Math.round((maxLevel - sample0) * stepsPerLevel);
+            int y1 = y + 10 + Math.round((maxLevel - sample1) * stepsPerLevel);
+
+            drawLine(graphics, x0, y0, x1, y0, 0xFFFF0000);
+            drawLine(graphics, x1, y0, x1, y1, 0xFFFF0000);
         }
     }
 
