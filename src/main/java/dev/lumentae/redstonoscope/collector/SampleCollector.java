@@ -29,5 +29,6 @@ public class SampleCollector {
     public void setSampleSize(int sampleSize) {
         this.sampleSize = sampleSize;
         this.samples = new int[sampleSize];
+        index = 0;
     }
 }
