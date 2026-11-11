@@ -54,7 +54,7 @@ public class RedstonoscopeCommand {
                         )
                 )
                 .then(ClientCommands.literal("duration")
-                        .then(ClientCommands.argument("ticks", IntegerArgumentType.integer(0, 100 * 20)) // max 100s
+                        .then(ClientCommands.argument("ticks", IntegerArgumentType.integer(2, 100 * 20)) // max 100s
                                 .suggests((_, builder) -> {
                                     builder.suggest(20);
                                     builder.suggest(40);
@@ -66,6 +66,7 @@ public class RedstonoscopeCommand {
                                 })
                                 .executes(context -> {
                                     int duration = IntegerArgumentType.getInteger(context, "ticks");
+
                                     Constants.TimeShown = duration;
                                     Constants.COLLECTOR.setSampleSize(duration);
                                     context.getSource().sendFeedback(Component.literal("Successfully set duration!"));
