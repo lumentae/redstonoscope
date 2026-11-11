@@ -1,8 +1,9 @@
 ﻿# Redstonoscope
 
-A basic and easy to use Minecraft mod providing an oscilloscope to show the history of redstone values for 26.3.
+A basic and easy to use FabricMC Minecraft mod providing an oscilloscope to show the history of redstone values for 26.3.
 
 ## Installation
+0. Install FabricMC
 1. Download the mod and put it into your mods folder
 2. Go into a single player world
 3. Run `/redstonoscope location <x> <y> <z>`
