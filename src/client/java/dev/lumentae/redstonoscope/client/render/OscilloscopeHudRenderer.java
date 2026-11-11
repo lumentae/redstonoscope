@@ -11,6 +11,9 @@ import org.jspecify.annotations.NonNull;
 public class OscilloscopeHudRenderer implements HudElement {
     @Override
     public void extractRenderState(@NonNull GuiGraphicsExtractor graphics, @NonNull DeltaTracker deltaTracker) {
+        if (!Constants.OverlayShown || Constants.ProbingPos.equals(Constants.DEFAULT_POS))
+            return;
+
         Minecraft mc = Minecraft.getInstance();
 
         float guiScale = mc.getWindow().getGuiScale();
