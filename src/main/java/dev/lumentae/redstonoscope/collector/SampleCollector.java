@@ -2,7 +2,7 @@ package dev.lumentae.redstonoscope.collector;
 
 public class SampleCollector {
     private int sampleSize = 200;
-    private final int[] samples = new int[sampleSize];
+    private int[] samples = new int[sampleSize];
     private int index = 0;
 
     public void addSample(int sample) {
@@ -28,5 +28,6 @@ public class SampleCollector {
 
     public void setSampleSize(int sampleSize) {
         this.sampleSize = sampleSize;
+        this.samples = new int[sampleSize];
     }
 }
