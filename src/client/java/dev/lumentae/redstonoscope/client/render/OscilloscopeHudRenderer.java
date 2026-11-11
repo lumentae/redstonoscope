@@ -48,7 +48,9 @@ public class OscilloscopeHudRenderer implements HudElement {
         int maxLevel = 15;
         Font font = Minecraft.getInstance().font;
 
-        float stepsPerLevel = (float) height / maxLevel - 1;
+        int graphTop = y + 10;
+        int graphBottom = y + height - 9;
+        float stepsPerLevel = (float) (graphBottom - graphTop) / maxLevel;
         for (int i = 0; i <= maxLevel; i++) {
             // Check if step can be divided by 3, so 15, 12, 9, 6, 3 or 0
             if (i % 3 == 0) {
@@ -79,8 +81,8 @@ public class OscilloscopeHudRenderer implements HudElement {
             int x0 = graphStart + Math.round(datapoint * horizontalSteps);
             int x1 = graphStart + Math.round((datapoint + 1) * horizontalSteps);
 
-            int y0 = y + 10 + Math.round((maxLevel - sample0) * stepsPerLevel);
-            int y1 = y + 10 + Math.round((maxLevel - sample1) * stepsPerLevel);
+            int y0 = graphTop + Math.round((maxLevel - sample0) * stepsPerLevel);
+            int y1 = graphTop + Math.round((maxLevel - sample1) * stepsPerLevel);
 
             drawWaveFormSegment(graphics, x0, y0, x1, y0);
             drawWaveFormSegment(graphics, x1, y0, x1, y1);
