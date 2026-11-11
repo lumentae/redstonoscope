@@ -18,13 +18,13 @@ public class RedstonoscopeClient implements ClientModInitializer {
     public void onInitializeClient() {
         HudElementRegistry.addLast(Identifier.parse(Constants.MOD_ID), new OscilloscopeHudRenderer());
         ClientTickEvents.START_CLIENT_TICK.register((minecraft) -> {
-            if (minecraft.level == null) {
+            if (Constants.ProbingPos.getX() == Integer.MAX_VALUE ||
+                    Constants.ProbingPos.getY() == Integer.MAX_VALUE ||
+                    Constants.ProbingPos.getZ() == Integer.MAX_VALUE) {
                 return;
             }
 
-            if (Constants.ProbingPos.getX() == Integer.MAX_VALUE ||
-                Constants.ProbingPos.getY() == Integer.MAX_VALUE ||
-                Constants.ProbingPos.getZ() == Integer.MAX_VALUE) {
+            if (minecraft.level == null) {
                 return;
             }
 
