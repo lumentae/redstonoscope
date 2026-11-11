@@ -1,16 +1,12 @@
 package dev.lumentae.redstonoscope.client.render;
 
 import dev.lumentae.redstonoscope.Constants;
-import dev.lumentae.redstonoscope.client.RedstonoscopeClient;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElement;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import org.jspecify.annotations.NonNull;
-
-import javax.swing.plaf.IconUIResource;
-import java.util.Arrays;
 
 public class OscilloscopeHudRenderer implements HudElement {
     @Override
@@ -74,9 +70,9 @@ public class OscilloscopeHudRenderer implements HudElement {
 
         int[] samples = Constants.COLLECTOR.getLastSamples();
         float horizontalSteps = (float) (graphEnd - graphStart) / (samples.length - 1);
-        for (int datapoint = 0; datapoint < RedstonoscopeClient.TimeShown - 1; datapoint++) {
-            int sample0 = samples[RedstonoscopeClient.TimeShown - 1 - datapoint];
-            int sample1 = samples[RedstonoscopeClient.TimeShown - 2 - datapoint];
+        for (int datapoint = 0; datapoint < Constants.TimeShown - 1; datapoint++) {
+            int sample0 = samples[Constants.TimeShown - 1 - datapoint];
+            int sample1 = samples[Constants.TimeShown - 2 - datapoint];
 
             int x0 = graphStart + Math.round(datapoint * horizontalSteps);
             int x1 = graphStart + Math.round((datapoint + 1) * horizontalSteps);
