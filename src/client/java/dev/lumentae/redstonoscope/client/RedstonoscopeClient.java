@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.awt.*;
 
 public class RedstonoscopeClient implements ClientModInitializer {
-    public static BlockPos ProbingPos = new BlockPos(Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE);
+    public static BlockPos ProbingPos = Constants.DEFAULT_POS;
     public static int TimeShown = 10 * 20; // 200 ticks = 10s
 
     @Override
