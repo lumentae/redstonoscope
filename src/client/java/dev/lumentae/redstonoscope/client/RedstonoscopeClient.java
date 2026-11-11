@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public class RedstonoscopeClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        HudElementRegistry.addLast(Identifier.parse("redstonoscope"), new OscilloscopeHudRenderer());
+        HudElementRegistry.addLast(Identifier.parse(Constants.MOD_ID), new OscilloscopeHudRenderer());
         ClientTickEvents.END_CLIENT_TICK.register((minecraft) -> {
             if (minecraft.level == null) {
                 return;
