@@ -1,4 +1,4 @@
-package dev.lumentae.redstonoscope.collector;
+package dev.lumentae.redstonoscope.client.collector;
 
 public class SampleCollector {
     private int sampleSize = 200;

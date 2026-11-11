@@ -1,6 +1,6 @@
 package dev.lumentae.redstonoscope.client.render;
 
-import dev.lumentae.redstonoscope.Constants;
+import dev.lumentae.redstonoscope.client.Constants;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElement;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;

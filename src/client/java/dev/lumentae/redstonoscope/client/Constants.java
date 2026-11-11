@@ -1,6 +1,6 @@
-package dev.lumentae.redstonoscope;
+package dev.lumentae.redstonoscope.client;
 
-import dev.lumentae.redstonoscope.collector.SampleCollector;
+import dev.lumentae.redstonoscope.client.collector.SampleCollector;
 import net.minecraft.core.BlockPos;
 
 public class Constants {

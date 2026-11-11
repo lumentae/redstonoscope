@@ -1,4 +1,4 @@
-{
+﻿{
   "schemaVersion": 1,
   "id": "redstonoscope",
   "version": "${version}",
@@ -8,20 +8,13 @@
   "contact": {},
   "license": "MIT",
   "icon": "assets/redstonoscope/icon.png",
-  "environment": "*",
+  "environment": "client",
   "entrypoints": {
-    "fabric-datagen": [
-      "dev.lumentae.redstonoscope.client.RedstonoscopeDataGenerator"
-    ],
     "client": [
       "dev.lumentae.redstonoscope.client.RedstonoscopeClient"
-    ],
-    "main": [
-      "dev.lumentae.redstonoscope.Redstonoscope"
     ]
   },
   "mixins": [
-    "redstonoscope.mixins.json",
     {
       "config": "redstonoscope.client.mixins.json",
       "environment": "client"
