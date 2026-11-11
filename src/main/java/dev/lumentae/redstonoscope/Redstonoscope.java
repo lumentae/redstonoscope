@@ -8,8 +8,6 @@ public class Redstonoscope implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        CommandRegistrationCallback.EVENT.register(((dispatcher, buildContext, selection) -> {
-            RedstonoscopeCommand.register(dispatcher, buildContext, selection);
-        }));
+        CommandRegistrationCallback.EVENT.register(RedstonoscopeCommand::register);
     }
 }
