@@ -9,6 +9,9 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import org.jspecify.annotations.NonNull;
 
+import javax.swing.plaf.IconUIResource;
+import java.util.Arrays;
+
 public class OscilloscopeHudRenderer implements HudElement {
     @Override
     public void extractRenderState(@NonNull GuiGraphicsExtractor graphics, @NonNull DeltaTracker deltaTracker) {
@@ -68,12 +71,13 @@ public class OscilloscopeHudRenderer implements HudElement {
         }
 
         int[] samples = Constants.COLLECTOR.getLastSamples();
+        float horizontalSteps = (float) (graphEnd - graphStart) / (samples.length - 1);
         for (int datapoint = 0; datapoint < RedstonoscopeClient.TimeShown - 1; datapoint++) {
             int sample0 = samples[RedstonoscopeClient.TimeShown - 1 - datapoint];
             int sample1 = samples[RedstonoscopeClient.TimeShown - 2 - datapoint];
 
-            int x0 = graphStart + datapoint;
-            int x1 = graphStart + datapoint + 1;
+            int x0 = graphStart + Math.round(datapoint * horizontalSteps);
+            int x1 = graphStart + Math.round((datapoint + 1) * horizontalSteps);
 
             int y0 = y + 10 + Math.round((maxLevel - sample0) * stepsPerLevel);
             int y1 = y + 10 + Math.round((maxLevel - sample1) * stepsPerLevel);
